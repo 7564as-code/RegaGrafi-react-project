@@ -2,7 +2,7 @@ import type { Ref,FocusEventHandler,ChangeEventHandler } from "react"
 
 type textField={
     label:string,
-    type?:'text'|'email'|'password'|'number'|'date'
+    type?:'text'|'email'|'password'|'number'|'date'|'textarea'
 onChange:ChangeEventHandler<HTMLInputElement>,
     onBlur:FocusEventHandler<HTMLInputElement>,
 name:string,
