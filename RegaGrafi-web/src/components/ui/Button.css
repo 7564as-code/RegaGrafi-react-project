@@ -1,0 +1,36 @@
+.button {
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: filter 0.2s, transform 0.1s;
+  
+}
+.button:disabled{
+  background-color:rgb(71, 72, 72);
+}
+.button--small {
+  padding: 6px 14px;
+  font-size: 14px;
+}
+
+.button--medium {
+  padding: 10px 24px;
+  font-size: 16px;
+}
+
+.button--large {
+  padding: 14px 32px;
+  font-size: 20px;
+}
+
+.button:hover {
+  filter: brightness(0.9);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+

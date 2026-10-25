@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.local)",
+      "Read(./.env.production)",
+      "Read(./.env.development)"
+    ],
+    "ask": [
+      "Bash(npm install:*)",
+      "Bash(npm i:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm update:*)",
+      "Bash(npx:*)",
+      "Bash(yarn add:*)",
+      "Bash(pnpm add:*)",
+      "PowerShell(npm install:*)",
+      "PowerShell(npm i:*)",
+      "PowerShell(npm uninstall:*)",
+      "PowerShell(npm update:*)",
+      "PowerShell(npx:*)"
+    ]
+  }
+}

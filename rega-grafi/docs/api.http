@@ -1,0 +1,142 @@
+### בקשות לדוגמה לכל ה-endpoints (תוסף REST Client ב-VS Code).
+### ה-API משתמש ב-cookies של Supabase. כדי להריץ מכאן:
+### 1. התחברי באתר בדפדפן.
+### 2. בכלי הפיתוח (F12), Application ואז Cookies, העתיקי את ה-cookies ששמם מתחיל ב-"sb-" אל המשתנה @cookie.
+### (אם יש כמה cookies, מחברים אותם עם "; " ביניהם.)
+
+@baseUrl = http://localhost:3000
+@cookie = sb-xxxx-auth-token=PASTE_COOKIE_HERE
+@jobId = PUT-JOB-ID
+@userId = PUT-USER-ID
+@proposalId = PUT-PROPOSAL-ID
+@conversationId = PUT-CONVERSATION-ID
+
+### ---------- פרופיל ----------
+
+### הפרופיל שלי
+GET {{baseUrl}}/api/me
+Cookie: {{cookie}}
+
+### עדכון הפרופיל שלי
+PATCH {{baseUrl}}/api/me
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{ "bio": "מעצבת לוגואים", "is_designer": true, "categories": ["logo", "flyer"], "availability": "available" }
+
+### העלאת לוגו (multipart)
+POST {{baseUrl}}/api/me/logo
+Cookie: {{cookie}}
+Content-Type: multipart/form-data; boundary=----boundary
+
+------boundary
+Content-Disposition: form-data; name="file"; filename="logo.png"
+Content-Type: image/png
+
+< ./logo.png
+------boundary--
+
+### פרופיל ציבורי
+GET {{baseUrl}}/api/profiles/{{userId}}
+Cookie: {{cookie}}
+
+### רשימת מעצבים
+GET {{baseUrl}}/api/designers?availability=available&category=logo&q=dana&page=1&pageSize=10
+Cookie: {{cookie}}
+
+### ---------- משרות ----------
+
+### רשימת משרות (חיפוש, סינון, מיון)
+GET {{baseUrl}}/api/jobs?q=logo&category=logo&status=open&sort=budget&order=asc&page=1&pageSize=10
+Cookie: {{cookie}}
+
+### יצירת משרה
+POST {{baseUrl}}/api/jobs
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{ "title": "לוגו לבית קפה", "description": "תיאור המשרה", "category": "logo", "budget": 800, "deadline": "2030-01-01T12:00:00+02:00" }
+
+### משרה אחת
+GET {{baseUrl}}/api/jobs/{{jobId}}
+Cookie: {{cookie}}
+
+### עריכת משרה
+PATCH {{baseUrl}}/api/jobs/{{jobId}}
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{ "title": "כותרת חדשה", "status": "in_progress" }
+
+### מחיקת משרה
+DELETE {{baseUrl}}/api/jobs/{{jobId}}
+Cookie: {{cookie}}
+
+### ---------- הצעות מחיר ----------
+
+### ההצעות על משרה
+GET {{baseUrl}}/api/jobs/{{jobId}}/proposals
+Cookie: {{cookie}}
+
+### הגשת הצעה
+POST {{baseUrl}}/api/jobs/{{jobId}}/proposals
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{ "message": "אני יכולה לעשות את זה", "price": 700, "delivery_hours": 48 }
+
+### אישור או דחייה של הצעה (בעלת המשרה)
+PATCH {{baseUrl}}/api/proposals/{{proposalId}}
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{ "status": "accepted" }
+
+### ---------- שיחות והודעות ----------
+
+### השיחות שלי
+GET {{baseUrl}}/api/conversations
+Cookie: {{cookie}}
+
+### פתיחת שיחה על משרה
+POST {{baseUrl}}/api/conversations
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{ "jobId": "{{jobId}}", "otherUserId": "{{userId}}" }
+
+### הודעה ישירה למעצבת
+POST {{baseUrl}}/api/conversations
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{ "otherUserId": "{{userId}}" }
+
+### הודעות בשיחה
+GET {{baseUrl}}/api/conversations/{{conversationId}}/messages
+Cookie: {{cookie}}
+
+### רק הודעות חדשות (polling). את הערך של after צריך לקודד (+ הופך ל-%2B)
+GET {{baseUrl}}/api/conversations/{{conversationId}}/messages?after=2026-01-01T00:00:00%2B00:00
+Cookie: {{cookie}}
+
+### שליחת הודעה
+POST {{baseUrl}}/api/conversations/{{conversationId}}/messages
+Cookie: {{cookie}}
+Content-Type: application/json
+
+{ "body": "שלום!" }
+
+### ---------- אדמין (דורש התחברות כאדמין) ----------
+
+### רשימת משתמשים
+GET {{baseUrl}}/api/admin/users?page=1&pageSize=20
+Cookie: {{cookie}}
+
+### כל המשרות
+GET {{baseUrl}}/api/admin/jobs?status=closed
+Cookie: {{cookie}}
+
+### מחיקת כל משרה
+DELETE {{baseUrl}}/api/admin/jobs/{{jobId}}
+Cookie: {{cookie}}
