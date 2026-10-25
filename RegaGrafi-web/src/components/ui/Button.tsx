@@ -7,20 +7,22 @@ type ButtonProps = {
   textColor?: string;
   borderColor?: string;
   size?: "small" | "medium" | "large";
+  full?: boolean;
   onClick?: () => void;
 };
 
 export default function Button({
   text,disabled=false,
-  color = "#2563eb",
-  textColor = "#fff",
+  color = "var(--color-primary)",
+  textColor = "var(--color-surface)",
   borderColor,
   size = "medium",
+  full = false,
   onClick,
 }: ButtonProps) {
   return (
     <button disabled={disabled}
-      className={`button button--${size}`}
+      className={`button button--${size}${full ? " button--full" : ""}`}
       style={{
         backgroundColor: color,
         color: textColor,

@@ -1,0 +1,47 @@
+/*
+ * Design tokens - colors.
+ * Based on the design PDF (react_project_v12.pdf).
+ * Usage: color: var(--color-ink); background: var(--color-primary);
+ */
+:root {
+  /* Primary (purple) - main brand color, buttons, links, highlights */
+  --color-primary: #6a4df4;
+  --color-primary-hover: #5b3fe0;
+  --color-primary-light: #7b61f7;
+  --color-primary-border: #b7a8fb;
+  --color-primary-tint: #cfc5ff;
+  --color-primary-soft: #efebff;
+
+  /* Accent: coral - CTA, errors, attention */
+  --color-coral: #FF6A55;
+  --color-coral-soft: #ffe8e3;
+
+  /* Accent: teal - success, available, confirmed */
+  --color-teal: #2ec4a6;
+  --color-teal-soft: #ddf6f0;
+
+  /* Accent: yellow - ratings, pending, warnings */
+  --color-yellow: #ffc83d;
+  --color-yellow-soft: #fff3d1;
+  --color-yellow-dark: #9e6e00;
+
+  /* Ink - text colors, from strongest to weakest */
+  --color-ink: #1e1b33;
+  --color-ink-2: #3a3652;
+  --color-ink-3: #4a4660;
+  --color-ink-muted: #7a7690;
+  --color-ink-faint: #a8a3b8;
+  --color-ink-placeholder: #b7b2c9;
+
+  /* Surfaces - page and card backgrounds */
+  --color-surface: #ffffff;
+  --color-page: #fbf9f6;
+  --color-page-alt: #f1ede5;
+  --color-input: #efedf3;
+
+  /* Lines - borders and dividers */
+  --color-line: #e8e3da;
+  --color-line-strong: #ede8de;
+  --color-line-cool: #e4e1ea;
+  --color-line-disabled: #cfcadf;
+}
