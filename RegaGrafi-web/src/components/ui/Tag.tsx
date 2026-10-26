@@ -1,7 +1,7 @@
 import "./Tag.css"
 
 type TextTag={
-text:string|number
+text:string|number|null
 }
 
 export default function Tag({text}:TextTag){

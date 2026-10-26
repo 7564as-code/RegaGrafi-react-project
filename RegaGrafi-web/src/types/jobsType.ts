@@ -5,7 +5,7 @@ id:string,
 title:string,
 description:string,
 budget?:number|null,
-category:"other"|"logo"|"banner"|"flyer"|"social",
+category:category,
 deadline?:string|null,
 created_at:string,
 status:"in_progress"|"open"|"closed",
@@ -17,3 +17,15 @@ owner:{
 }
 
 // export type jobcardType= Omit<jobType,'id'>
+
+export type jobFormType={
+    title:string,
+    description:string,
+    category:category,
+budget?:number|null,
+deadline?:string|null,
+
+}
+export type category=     "other"|"logo"|"banner"|"flyer"|"video"|"ad"
+
+   
