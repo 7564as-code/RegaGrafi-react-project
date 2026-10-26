@@ -1,5 +1,7 @@
 import JobCard from '../components/features/JobCard'
+import Tag from '../components/ui/Tag';
 import { useJobs } from '../hook/useJobs'
+import { categories } from '../types/categories';
 import "./JobsPage.css";
 
 export default function JobPage() {
@@ -15,6 +17,10 @@ export default function JobPage() {
                 <p>עבודות שמחכות עכשיו לגרפיקאית פנויה</p>
             </div>
         )}
+        <div>
+            <Tag text="הכל" color='purple'/>
+{categories.map((x)=><Tag text={x.label} color='white'></Tag>)}
+       </div>
         <div className="jobs__grid">
             {data && data.data.map((x) => <JobCard jobcard={x} key={x.id} />)}
         </div>
