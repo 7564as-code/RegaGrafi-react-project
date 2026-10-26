@@ -10,6 +10,8 @@ export function getJobs(filter?: filterType) {
         params.set("category", filter.category);
     if (filter?.q)
         params.set("q", filter.q);
+      if (filter?.order)
+        params.set("order", filter.order);
     const query = params.toString();
     return api<PaginatedResponse<jobType>>(`/api/jobs${query?`?${query}`:""}`);
 }
