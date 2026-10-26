@@ -81,7 +81,6 @@ export default function PostJobPage() {
 
                         return (selectedDate > today || "יש לבחור תאריך עתידי, החל ממחר");
                     }, setValueAs: (v) => {
-                        v.toISOString(),
                         v == "" ? undefined : Number(v)
                         return v
                     }

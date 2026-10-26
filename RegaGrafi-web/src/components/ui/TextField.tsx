@@ -5,7 +5,7 @@ type Element=HTMLInputElement&HTMLTextAreaElement
 
 type textField={
     label:string,
-    type?:'text'|'email'|'password'|'number'
+    type?:'text'|'email'|'password'|'number'|'textarea'|'date'
     placeholder?:string,
     multiline?:boolean,
 onChange:ChangeEventHandler<Element>,
