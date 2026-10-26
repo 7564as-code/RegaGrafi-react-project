@@ -4,9 +4,10 @@ import { getJob } from "../api/jobs";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { jobFormType } from "../types/jobsType";
 import { useNavigate } from "react-router-dom";
+import type { filterType } from "../types/filterType";
 
- export function useJobs(){
-    return useQuery({queryKey:["jobs"],queryFn:getJobs,retry:false})
+ export function useJobs(filter:filterType){
+    return useQuery({queryKey:["jobs",filter],queryFn:()=>getJobs(filter),retry:false})
  }
   export function useJob(id:string | undefined){
     return useQuery({queryKey:["jobs",id],queryFn:()=>getJob(id),enabled:id !== undefined})

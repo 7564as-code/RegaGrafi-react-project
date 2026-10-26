@@ -1,9 +1,15 @@
 import type { jobFormType, jobType } from "../types/jobsType";
 import type { PaginatedResponse, SingleResponse } from "../types/paginationType";
 import { api } from "../api/client";
+import type { filterType } from "../types/filterType";
 
-export function getJobs(){
-    return api<PaginatedResponse<jobType>>("/api/jobs")
+export function getJobs(filter?:filterType){
+    const url=new URLSearchParams();
+    if(filter?.category)
+    url.set("category",filter.category)
+  const query = url.toString();
+
+    return api<PaginatedResponse<jobType>>(`/api/jobs?${query?`${query}`:""}`)
 }
 
 
