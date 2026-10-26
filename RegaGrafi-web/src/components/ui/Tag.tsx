@@ -1,9 +1,11 @@
 import "./Tag.css"
 
-type TextTag={
-text:string|number|null
+type TextTag = {
+    text: string | number
+    color?: string
+    textColor?: string
 }
 
-export default function Tag({text}:TextTag){
-    return <span className="tag">{text}</span>
+export default function Tag({ text, color = "var(--color-primary-soft)", textColor = "var(--color-primary)" }: TextTag) {
+    return <span className="tag" style={{ backgroundColor: color, color: textColor }}>{text}</span>
 }

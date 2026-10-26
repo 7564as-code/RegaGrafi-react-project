@@ -3,7 +3,5 @@
   padding: 4px 14px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--color-primary);
-  background: var(--color-primary-soft);
   border-radius: 999px;
 }

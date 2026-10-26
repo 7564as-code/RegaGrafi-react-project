@@ -34,3 +34,8 @@
   font-size: 13px;
   color: var(--color-coral);
 }
+
+.field__textarea {
+  min-height: 110px;
+  resize: vertical;
+}

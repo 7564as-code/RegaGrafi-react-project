@@ -43,17 +43,18 @@ function JobCard({ jobcard }: jobcard) {
 
     return (
         <div className="job-card">
-            <div className="job-card__tag"><Tag text={jobcard.category} /></div>
-
-            {jobcard.deadline && (
-                <div className="job-card__tag"><Tag text={deadline(jobcard.deadline)} /></div>
-            )}
+            <div className="job-card__tags">
+                <Tag text={jobcard.category} />
+                {jobcard.deadline && (
+                    <span className="job-card__deadline"><Tag text={deadline(jobcard.deadline)} color="var(--color-coral-soft)" textColor="var(--color-coral)" /></span>
+                )}
+            </div>
 
             <h2 className="job-card__title">{jobcard.title}</h2>
             <p className="job-card__description">{jobcard.description}</p>
             <div className="job-card__footer">
                 <div className="job-card__price">
-                    {jobcard.budget && <span className="job-card__budget">{jobcard.budget}₪</span>}
+                    {jobcard.budget && <span className="job-card__budget">₪{jobcard.budget}</span>}
                     <span className="job-card__meta">{timeAgo(jobcard.created_at)}</span>
                 </div>
                 <Link to={`/jobs/${jobcard.id}`}><Button text="שלחי הצעה" size="small" /></Link>
