@@ -33,7 +33,12 @@
     grid-template-columns: 1fr;
   }
 }
-
+.jobs__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
 .jobs__filters button{
   background:none;
 border:none;
