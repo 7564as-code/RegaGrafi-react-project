@@ -36,7 +36,7 @@ export default function ProposalPage() {
                     <div className="proposal__job-tag"><Tag text={DetailJob.category} color="var(--color-surface)" textColor="var(--color-primary)" /></div>
                     <div className="proposal__job-row">
                         <h2 className="proposal__job-title">{DetailJob.title}</h2>
-                        {DetailJob.budget && <p className="proposal__job-budget">תקציב:₪{DetailJob.budget}</p>}
+                        {DetailJob.budget && <p className="proposal__job-budget">₪{DetailJob.budget}</p>}
                     </div>
                 </div>
                 <form className="proposal__form" onSubmit={onSubmit}>
