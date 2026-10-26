@@ -42,6 +42,7 @@ export default function ProposalPage() {
                 <form className="proposal__form" onSubmit={onSubmit}>
                     <TextField label="ההודעה שלך למפרסמת" multiline error={errors.message?.message} {...register("message", { required: "יש למלא הודעה" })} />
                     <TextField label="מחיר" type="number" error={errors.price?.message} {...register("price", { required: "חסר מחיר", valueAsNumber: true, min: { value: 0, message: "המחיר לא יכול להיות שלילי" } })} />
+
                     <TextField label="כמה זמן תיקח לך העבודה?" type="number" error={errors.delivery_hours?.message} {...register("delivery_hours", { required: "חסר דדלין", valueAsNumber: true, min: { value: 1, message: "יש להזין משך זמן של שעה לפחות." } })} />
 
                     <Button text={mutation.isPending ? "ההצעה נשלחת..." : " שלחי הודעה למפרסמת"} size="large" full disabled={mutation.isSuccess || mutation.isPending} />

@@ -12,7 +12,7 @@ export type jobType = {
     owner: {
         id: string,
         display_name: string,
-        logo_url: string
+        logo_url: string|null
     }
 }
 
@@ -26,6 +26,6 @@ export type jobFormType = {
     deadline?: string | null,
 
 }
-export type category = "other" | "logo" | "banner" | "flyer" | "video" | "ad"
+export type category = "other" | "logo" | "banner" | "flyer" | "video" | "ad"|"social"
 
 

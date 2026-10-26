@@ -35,19 +35,19 @@ export default function PostJobPage() {
                 <TextField type="text" label="כותרת" error={errors.title?.message}
                     {...register("title", {
                         required: "שכחת לכתוב כותרת:)", minLength:
-                            { value: 3, message: "הכותרת חייבת להכיל לפחות 3 תווים" }, maxLength: { value: 150, message: "הכותרת מכילה עד 150 תווים" }
+                            { value: 3, message: "הכותרת חייבת להכיל לפחות שלושה תווים" }, maxLength: { value: 150, message: "הכותרת מכילה עד 150 תווים" },validate:{value:(v)=>v.trim().length>2?true:"הכותרת חייבת להכיל לפחות שלושה תווים"}
                     })} />
                 <br />
                 <TextField
-                    label="תאור העבודה"
-                    type="textarea"
+                    label="תיאור העבודה"
+                    multiline
                     error={errors.description?.message}
                     {...register("description", {
-                        required: "חסר תאור",
+                        required: "חסר תיאור",
                         maxLength: {
-                            value: 5000,
-                            message: "התאור יכול להכיל עד 5000 תווים"
-                        }
+                            value: 1500,
+                            message: "התיאור יכול להכיל עד 1500 תווים"
+                        },validate:{value:(v)=>v.trim().length>2?true:"התיאור חייב להכיל לפחות שלושה תווים"}
                     })}
                 />
                 <br />
@@ -72,20 +72,29 @@ export default function PostJobPage() {
                 <TextField label="תקציב" type="number" error={errors.budget?.message}
                     {...register("budget", { min: { value: 0.1, message: "התקציב חייב להיות מעל ה-0" }, setValueAs: (v) => v == "" ? undefined : Number(v) })} />
                 <br />
-                <TextField label="דדליין" type="date" error={errors.deadline?.message}  {...register("deadline", {
-                    validate: (value) => {
-                        const today = new Date();
-                        today.setHours(0, 0, 0, 0);
+              <TextField
+  label="דדליין"
+  type="date"
+  error={errors.deadline?.message}
+  {...register("deadline", {
+    setValueAs: (v) =>
+      v === "" ? undefined : new Date(`${v}T00:00:00`).toISOString(),
 
-                        const selectedDate = new Date(`${value}T00:00:00`);
+    validate: (value) => {
+      if (!value) return true;
 
-                        return (selectedDate > today || "יש לבחור תאריך עתידי, החל ממחר");
-                    }, setValueAs: (v) => {
-                        v == "" ? undefined : Number(v)
-                        return v
-                    }
-                })} />
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
+      const selectedDate = new Date(value);
+
+      return (
+        selectedDate > today ||
+        "יש לבחור תאריך עתידי, החל ממחר"
+      );
+    }
+  })}
+/>
 
 
 
@@ -96,7 +105,7 @@ export default function PostJobPage() {
                 <br />
 
 
-                {postJobMutation.isError && <p>שגיאה נכשלה השליחה לא  נסו שוב😔</p>}
+                {postJobMutation.isError && <p>השליחה נכשלה, נסו שוב😔</p>}
 
             </form>
 
