@@ -5,7 +5,6 @@ import { categories } from "../../types/categories";
 import Button from "../ui/Button";
 import "./JobForm.css";
 import { getErrorInfo } from "../../lib/errorInfo";
-import { statusType } from "../../types/status";
 
 type JobFormProps = {
     values?: jobFormType,
@@ -89,21 +88,6 @@ export default function JobForm({ values, onSubmit, isPending, isError, error, t
                 }
             })}
         />
-      { values&& <select
-            id="status"
-            {...register("status", {
-                required: "מצב הודעה",
-            })}
-        >
-            <option value="">שני סטטוס מודעה</option>
-
-            {statusType.map((s) => (
-                <option key={s.value} value={s.value}>
-                    {s.label}
-                </option>
-            ))}
-        </select>}
-
         <Button text={text} size="large" full disabled={isPending} />
         {isError && <p className="job-form__error" role="alert">{error ? getErrorInfo(error).title : "השליחה נכשלה, נסו שוב😔"}</p>}
     </form>
