@@ -17,7 +17,6 @@ function Header() {
         <nav className="header__nav">
           <ul className="header__links">
             <li><NavLink to="/" end>דף הבית</NavLink></li>
-            <li><NavLink to="/how-it-works">איך זה עובד</NavLink></li>
              <li><NavLink to="/designers">גרפיקאיות</NavLink></li>
              {user&&
             <li><NavLink to="/jobs">לוח מודעות</NavLink></li>}

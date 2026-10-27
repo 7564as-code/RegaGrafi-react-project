@@ -8,7 +8,7 @@ import { useState } from "react"
 import { useQueryClient } from "@tanstack/react-query";
 import "./AuthPage.css";
 export default function LoginPage() {
-    const queryClient=useQueryClient()
+    const queryClient = useQueryClient()
     const navigate = useNavigate()
     const [serverError, setServerError] = useState("")
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<authType>();
@@ -16,7 +16,7 @@ export default function LoginPage() {
         setServerError("")
         try {
             await signIn(data)
-           await queryClient.invalidateQueries({queryKey:["user"]})
+            await queryClient.invalidateQueries({ queryKey: ["user"] })
             navigate("/jobs")
         }
         catch {
