@@ -4,6 +4,8 @@ import Tag from '../components/ui/Tag';
 import { useJobs } from '../hook/useJobs'
 import { categories } from '../types/categories';
 import "./JobsPage.css";
+import StatusMessage from "../components/ui/StatusMessage";
+import ErrorMessage from "../components/ui/ErrorMessage";
 import TextField from '../components/ui/TextField';
 import { useForm } from 'react-hook-form';
 import type { filterType } from '../types/filterType';
@@ -15,7 +17,7 @@ type search = {
 
 export default function JobPage() {
     const [filter, setfilter] = useState<filterType>({})
-    const { isPending, isError, data } = useJobs(filter)
+    const { isPending, isError, error, data, refetch } = useJobs(filter)
     const { register, handleSubmit } = useForm<search>();
 
 
@@ -57,16 +59,16 @@ export default function JobPage() {
         <div className="jobs__grid">
             {data && data.data.map((x) => <JobCard jobcard={x} key={x.id} />)}
         </div>
-        {isPending && <p>טוען מודעות...</p>}
+        {isPending && <StatusMessage variant="loading" title="טוען מודעות..." />}
 
         {isError && (
-            <p>אירעה שגיאה בטעינת המודעות 😔 נסי שוב בעוד רגע.</p>
+            <ErrorMessage error={error} onRetry={() => refetch()} />
         )}
 
         {data && data.data.length === 0 && (
             (filter.category || filter.q)
-                ? <p>לא נמצאו מודעות שמתאימות לחיפוש</p>
-                : <p>אין מודעות פתוחות כרגע.</p>
+                ? <StatusMessage variant="empty" title="לא נמצאו מודעות שמתאימות לחיפוש" />
+                : <StatusMessage variant="empty" title="אין מודעות פתוחות כרגע" />
         )}
     </main>
 

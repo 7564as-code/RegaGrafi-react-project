@@ -4,27 +4,29 @@ import JobForm from "../components/features/JobForm";
 import type { jobFormType } from "../types/jobsType";
 import { useAuth } from "../hook/useAuth";
 import "./PostJobPage.css";
+import StatusMessage from "../components/ui/StatusMessage";
+import ErrorMessage from "../components/ui/ErrorMessage";
 
 
 
 
 export default function EditJobPage(){
         const { id } = useParams();
-const {data,isPending,isError}=useJob(id)
-const {isPending:isPendinge,isError:isErrore,mutate,isSuccess}=useEditJob(id!)
+const {data,isPending,isError,error,refetch}=useJob(id)
+const {isPending:isPendinge,isError:isErrore,error:errore,mutate,isSuccess}=useEditJob(id!)
 const {user,isPending:isPendinguser}=useAuth()
 const canedit=user?.id==data?.data.owner.id||user?.role === "admin"
 
     if (isError)
-        return <div><p>המודעה לא קיימת</p></div>
+        return <ErrorMessage error={error} onRetry={() => refetch()} />
     if (isPending||isPendinguser)
-        return <div><p>טוען🤌🤌</p></div>
+        return <StatusMessage variant="loading" title="טוען..." />
 
     if (!data)
-        return <div><p>המודעה לא קיימת</p></div>
+        return <StatusMessage variant="notFound" title="המודעה לא קיימת" action={{ to: "/jobs", label: "חזרה ללוח המודעות" }} />
         
 if(!canedit)
-    return <div><p>רק בעל המודעה יכול לערוך אותה</p></div>
+    return <StatusMessage variant="error" title="רק בעל המודעה יכול לערוך אותה" action={{ to: "/jobs", label: "חזרה ללוח המודעות" }} />
 const datafd:jobFormType={
 category:data.data.category,
 title:data.data.title,
@@ -38,7 +40,7 @@ deadline: data.data.deadline? new Date(data.data.deadline).toLocaleDateString("s
         <main className="post-job post-job--single">
             <section className="post-job__card">
                 <h1 className="post-job__title">עריכת מודעה</h1>
-                <JobForm values={datafd} onSubmit={mutate} isError={isErrore} isPending={isPendinge||isSuccess} text="עדכון מודעה"/>
+                <JobForm values={datafd} onSubmit={mutate} isError={isErrore} error={errore} isPending={isPendinge||isSuccess} text="עדכון מודעה"/>
             </section>
         </main>
     )

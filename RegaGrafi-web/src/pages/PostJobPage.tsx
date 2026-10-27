@@ -11,13 +11,13 @@ export default function PostJobPage() {
         { icon: "✓", color: "var(--color-teal)", title: "מחליפות פרטי קשר", text: "וממשיכות לעבוד כמו שנוח לכן" },
     ];
 
-    const {mutate,isPending,isError,isSuccess}=usePostJob()
+    const {mutate,isPending,isError,error,isSuccess}=usePostJob()
 
     return (
         <main className="post-job">
             <section className="post-job__card">
                 <h1 className="post-job__title">פרסום מודעה</h1>
-<JobForm onSubmit={mutate} isError={isError} isPending={isPending||isSuccess} text="פרסם מודעה"/>
+<JobForm onSubmit={mutate} isError={isError} error={error} isPending={isPending||isSuccess} text="פרסם מודעה"/>
             </section>
 
             <aside className="after">

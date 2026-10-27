@@ -4,17 +4,19 @@ import TextField from "../ui/TextField";
 import { categories } from "../../types/categories";
 import Button from "../ui/Button";
 import "./JobForm.css";
+import { getErrorInfo } from "../../lib/errorInfo";
 
  type JobFormProps = {
         values?: jobFormType,
         onSubmit: (a: jobFormType) => void,
         isPending: boolean,
         isError:boolean,
+        error?:unknown,
         text: string
     }
 
 
-export default function JobForm({values,onSubmit,isPending,isError,text}: JobFormProps) {
+export default function JobForm({values,onSubmit,isPending,isError,error,text}: JobFormProps) {
     const { register, handleSubmit,formState:{errors} } = useForm<jobFormType>({defaultValues:values});
    
      
@@ -88,6 +90,6 @@ export default function JobForm({values,onSubmit,isPending,isError,text}: JobFor
             />
 
             <Button text={text} size="large" full disabled={isPending} />
-            {isError && <p className="job-form__error">השליחה נכשלה, נסו שוב😔</p>}
+            {isError && <p className="job-form__error" role="alert">{error ? getErrorInfo(error).title : "השליחה נכשלה, נסו שוב😔"}</p>}
         </form>
 }

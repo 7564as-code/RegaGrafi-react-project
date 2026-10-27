@@ -1,4 +1,7 @@
 import "./ProposalPage.css";
+import StatusMessage from "../components/ui/StatusMessage";
+import ErrorMessage from "../components/ui/ErrorMessage";
+import { getErrorInfo } from "../lib/errorInfo";
 import { Link, useParams } from "react-router-dom";
 import Tag from "../components/ui/Tag";
 import { useForm } from "react-hook-form"
@@ -10,7 +13,7 @@ import { useCreateProposal } from "../hook/proposal";
 
 export default function ProposalPage() {
     const { id } = useParams();
-    const { isPending, isError, data } = useJob(id)
+    const { isPending, isError, error, data, refetch } = useJob(id)
     const DetailJob = data?.data
     const { register, handleSubmit, formState: { errors } } = useForm<proposalFormType>();
 
@@ -20,12 +23,12 @@ export default function ProposalPage() {
     const onSubmit = handleSubmit((d) => mutation.mutate(d))
 
     if (isError)
-        return <div><p>המודעה לא קיימת</p></div>
+        return <ErrorMessage error={error} onRetry={() => refetch()} />
     if (isPending)
-        return <div><p>טוען🤌🤌</p></div>
+        return <StatusMessage variant="loading" title="טוען..." />
 
     if (!DetailJob)
-        return <div><p>המודעה לא קיימת</p></div>
+        return <StatusMessage variant="notFound" title="המודעה לא קיימת" action={{ to: "/jobs", label: "חזרה ללוח המודעות" }} />
 
 
     return (
@@ -47,7 +50,7 @@ export default function ProposalPage() {
 
                     <Button text={mutation.isPending ? "ההצעה נשלחת..." : " שלחי הודעה למפרסמת"} size="large" full disabled={mutation.isSuccess || mutation.isPending} />
                     {mutation.isError &&
-                        <p className="proposal__feedback proposal__feedback--error">לא הצלחנו לשלוח את ההצעה. ייתכן שכבר שלחת הצעה על המודעה הזו, או שהיא שלך, או שהיא כבר לא פתוחה."</p>}
+                        <p className="proposal__feedback proposal__feedback--error">{[400, 403, 409].includes(getErrorInfo(mutation.error).status) ? "לא הצלחנו לשלוח את ההצעה. ייתכן שכבר שלחת הצעה על המודעה הזו, או שהיא שלך, או שהיא כבר לא פתוחה." : getErrorInfo(mutation.error).title}</p>}
                     {mutation.isSuccess &&
                         <div className="proposal__feedback">
                             <p>ההודעה נשלחה בהצלחה</p>
