@@ -3,6 +3,7 @@ import type { jobFormType } from "../../types/jobsType";
 import TextField from "../ui/TextField";
 import { categories } from "../../types/categories";
 import Button from "../ui/Button";
+import "./JobForm.css";
 
  type JobFormProps = {
         values?: jobFormType,
@@ -13,11 +14,11 @@ import Button from "../ui/Button";
     }
 
 
-export default function JobForm({values,onSubmit,isPending,isError}: JobFormProps) {
+export default function JobForm({values,onSubmit,isPending,isError,text}: JobFormProps) {
     const { register, handleSubmit,formState:{errors} } = useForm<jobFormType>({defaultValues:values});
    
      
-      return  <form onSubmit={handleSubmit(onSubmit)}>
+      return  <form className="job-form" onSubmit={handleSubmit(onSubmit)}>
             <TextField type="text" label="כותרת" error={errors.title?.message}
                 {...register("title", {
                     required: "שכחת לכתוב כותרת:)", minLength:
@@ -36,7 +37,7 @@ export default function JobForm({values,onSubmit,isPending,isError}: JobFormProp
                 })}
             />
 
-            <div className="post-job__row">
+            <div className="job-form__row">
                 <div className={`field${errors.category ? " field--error" : ""}`}>
                     <label className="field__label" htmlFor="category">סוג העבודה</label>
                     <select
@@ -86,7 +87,7 @@ export default function JobForm({values,onSubmit,isPending,isError}: JobFormProp
                 })}
             />
 
-            <Button text="שליחה" size="large" full disabled={isPending} />
-            {isError && <p className="post-job__error">השליחה נכשלה, נסו שוב😔</p>}
+            <Button text={text} size="large" full disabled={isPending} />
+            {isError && <p className="job-form__error">השליחה נכשלה, נסו שוב😔</p>}
         </form>
 }

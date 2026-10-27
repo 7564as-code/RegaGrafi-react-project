@@ -3,6 +3,7 @@ import { useEditJob, useJob } from "../hook/useJobs";
 import JobForm from "../components/features/JobForm";
 import type { jobFormType } from "../types/jobsType";
 import { useAuth } from "../hook/useAuth";
+import "./PostJobPage.css";
 
 
 
@@ -33,6 +34,13 @@ deadline: data.data.deadline? new Date(data.data.deadline).toLocaleDateString("s
 
   
 
-    return <JobForm values={datafd} onSubmit={mutate} isError={isErrore} isPending={isPendinge||isSuccess} text="עדכון מודעה"/>
+    return (
+        <main className="post-job post-job--single">
+            <section className="post-job__card">
+                <h1 className="post-job__title">עריכת מודעה</h1>
+                <JobForm values={datafd} onSubmit={mutate} isError={isErrore} isPending={isPendinge||isSuccess} text="עדכון מודעה"/>
+            </section>
+        </main>
+    )
    
 }

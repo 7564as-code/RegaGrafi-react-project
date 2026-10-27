@@ -22,26 +22,9 @@
   font-weight: 800;
 }
 
-.post-job__form {
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.post-job__row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  align-items: start;
-}
-
-.post-job__error {
-  padding: 10px;
-  text-align: center;
-  color: var(--color-coral);
-  background: var(--color-coral-soft);
-  border-radius: 12px;
+.post-job--single {
+  grid-template-columns: minmax(0, 720px);
+  justify-content: center;
 }
 
 .after {

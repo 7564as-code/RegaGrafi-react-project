@@ -1,0 +1,21 @@
+.job-form {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.job-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.job-form__error {
+  padding: 10px;
+  text-align: center;
+  color: var(--color-coral);
+  background: var(--color-coral-soft);
+  border-radius: 12px;
+}
