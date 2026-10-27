@@ -7,6 +7,7 @@ import "./JobsPage.css";
 import TextField from '../components/ui/TextField';
 import { useForm } from 'react-hook-form';
 import type { filterType } from '../types/filterType';
+import Button from '../components/ui/Button';
 
 type search = {
     text: string
@@ -29,29 +30,28 @@ export default function JobPage() {
                 <h2>מודעות פתוחות</h2>
                 <p>עבודות שמחכות עכשיו לגרפיקאית פנויה</p>
             </div>)}
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <TextField className='jobs__filters' label="חיפוש"
-                {...register("text")}
-            />
-
-
-            <button type="submit">חיפוש</button>
-        </form>
-       <select
-        value={filter.order||undefined}
-        onChange={e => setfilter(prev => ({ ...prev, order:e.target.value as"desc"|"asc"}))}
-      >
-        <option value="desc">הכי חדשות קודם</option>
-        <option value="asc">הכי ישנות קודם</option>
-      </select>
-
-    
-        <div>
-            <button type='button' onClick={() => setfilter(prev => ({ ...prev, category: undefined }))}> <Tag text="הכל" color={filter.category === undefined ? "var(--color-coral-soft)" : "white"} /></button>
-
-
-
-            {categories.map((x) => <button key={x.value} onClick={() => setfilter(prev => ({ ...prev, category: x.value }))} type='button'><Tag text={x.label} color={filter.category === x.value ? "var(--color-coral-soft)" : "white"}></Tag></button>)}
+        <div className="jobs__toolbar">
+        <div className="search__header">
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <TextField label=""
+                    {...register("text")}
+                />
+                <Button text="חיפוש" size="small" />
+            </form>
+            <select
+                value={filter.order || undefined}
+                onChange={e => setfilter(prev => ({ ...prev, order: e.target.value as "desc" | "asc" }))}
+            >
+                <option value="desc">הכי חדשות קודם</option>
+                <option value="asc">הכי ישנות קודם</option>
+            </select>
+        </div>
+        <div className='jobs__filters'>
+            <button type='button' onClick={() => setfilter(prev => ({ ...prev, category: undefined }))}>
+                <Tag text="הכל" color={filter.category === undefined ? "var(--color-coral-soft)" : "white"} /></button>
+            {categories.map((x) => <button key={x.value} onClick={() => setfilter(prev => ({ ...prev, category: x.value }))} type='button'><Tag text={x.label}
+                color={filter.category === x.value ? "var(--color-coral-soft)" : "white"}></Tag></button>)}
+        </div>
         </div>
         <div className="jobs__grid">
             {data && data.data.map((x) => <JobCard jobcard={x} key={x.id} />)}
