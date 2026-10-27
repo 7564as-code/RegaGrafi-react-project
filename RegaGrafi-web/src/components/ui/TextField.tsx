@@ -1,7 +1,7 @@
-import type { Ref,FocusEventHandler,ChangeEventHandler } from "react"
+import type { Ref, FocusEventHandler, ChangeEventHandler } from "react"
 import "./TextField.css"
 
-type Element=HTMLInputElement&HTMLTextAreaElement
+type Element = HTMLInputElement & HTMLTextAreaElement
 
 type textField={
     label:string,
