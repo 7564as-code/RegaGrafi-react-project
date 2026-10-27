@@ -13,7 +13,7 @@ import Button from "../ui/Button";
     }
 
 
-export default function JobForm({values,onSubmit,isPending,isError,text}: JobFormProps) {
+export default function JobForm({values,onSubmit,isPending,isError}: JobFormProps) {
     const { register, handleSubmit,formState:{errors} } = useForm<jobFormType>({defaultValues:values});
    
      
