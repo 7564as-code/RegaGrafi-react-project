@@ -4,6 +4,7 @@ import Tag from "../ui/Tag"
 import { Link } from "react-router-dom";
 import "./JobCard.css";
 import { useAuth } from "../../hook/useAuth";
+import { categories } from "../../types/categories";
 type jobcard = {
     jobcard: jobType
 }
@@ -46,12 +47,14 @@ const canedit=user?.id==jobcard.owner.id||user?.role === "admin"
     return (
         <div className="job-card">
             <div className="job-card__tags">
-                <Tag text={jobcard.category} />
+                <Tag text={categories.find((x)=>jobcard.category===x.value)?.label??""} />
                 {jobcard.deadline && (
                     <span className="job-card__deadline"><Tag text={deadline(jobcard.deadline)} color="var(--color-coral-soft)" textColor="var(--color-coral)" /></span>
                 )}
             </div>
-
+{
+ (jobcard.status!="open")&&<Tag text={jobcard.status}></Tag>
+}
             <h2 className="job-card__title">{jobcard.title}</h2>
             <p className="job-card__description">{jobcard.description}</p>
             <div className="job-card__footer">

@@ -32,7 +32,8 @@ category:data.data.category,
 title:data.data.title,
 description:data.data.description,
 budget:data.data.budget??null,
-deadline: data.data.deadline? new Date(data.data.deadline).toLocaleDateString("sv-SE")  : undefined}
+deadline: data.data.deadline? new Date(data.data.deadline).toLocaleDateString("sv-SE")  : undefined,
+status:data.data.status}
 
   
 

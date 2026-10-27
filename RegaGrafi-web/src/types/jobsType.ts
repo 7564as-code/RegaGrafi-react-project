@@ -24,6 +24,7 @@ export type jobFormType = {
     category: category,
     budget?: number | null,
     deadline?: string | null,
+    status:"open"|"closed"|"in_progress"
 
 }
 export type category = "other" | "logo" | "banner" | "flyer" | "video" | "ad"|"social"
