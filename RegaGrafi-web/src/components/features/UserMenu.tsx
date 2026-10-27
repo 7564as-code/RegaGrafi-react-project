@@ -5,7 +5,7 @@ import { useAuth } from "../../hook/useAuth"
 
 export default function UserMenu(){
 const signOutMutation = useSignOut()
-  const { user, isPending } = useAuth()
+  const { user} = useAuth()
   const [menu,setmenu]=useState(false)
   return <div className="user-menu">
     <button onClick={() => setmenu(prev => !prev)}>{user?.display_name||"שלום לך"}</button>

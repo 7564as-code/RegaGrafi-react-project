@@ -25,11 +25,12 @@ export default function JobPage() {
     }
 
     return <main className="jobs">
-        {data && data.data.length > 0 && (
-            <div className="jobs__header">
-                <h2>מודעות פתוחות</h2>
-                <p>עבודות שמחכות עכשיו לגרפיקאית פנויה</p>
-            </div>)}
+     {data && (data.data.length > 0 || filter.category || filter.q) && (
+    <div className="jobs__header">
+        <h2>מודעות פתוחות</h2>
+        <p>עבודות שמחכות עכשיו לגרפיקאית פנויה</p>
+    </div>
+)}
         <div className="jobs__toolbar">
         <div className="search__header">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -47,7 +48,7 @@ export default function JobPage() {
             </select>
         </div>
         <div className='jobs__filters'>
-            <button type='button' onClick={() => setfilter(prev => ({ ...prev, category: undefined }))}>
+            <button type='button' onClick={() => setfilter(prev => ({ ...prev, category: undefined,q:undefined }))}>
                 <Tag text="הכל" color={filter.category === undefined ? "var(--color-coral-soft)" : "white"} /></button>
             {categories.map((x) => <button key={x.value} onClick={() => setfilter(prev => ({ ...prev, category: x.value }))} type='button'><Tag text={x.label}
                 color={filter.category === x.value ? "var(--color-coral-soft)" : "white"}></Tag></button>)}

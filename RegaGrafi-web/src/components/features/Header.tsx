@@ -29,7 +29,7 @@ function Header() {
         {!isPending &&
           <div className="header__actions">
 
-            {user ?<UserMenu></UserMenu>              : <>
+            {user ?<UserMenu></UserMenu>  : <>            
             
 
                 <NavLink to="/login"> <Button text="התחברות" color="#ffffff" textColor="#000000" borderColor="#000000" size="small" /></NavLink>
