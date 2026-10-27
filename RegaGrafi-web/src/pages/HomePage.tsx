@@ -42,6 +42,9 @@ export default function HomePages() {
 
                 <div className="home__visual" aria-hidden="true">
                     <div className="home__circle" />
+                    <span className="home__dot home__dot--coral" />
+                    <span className="home__dot home__dot--teal" />
+                    <span className="home__dot home__dot--yellow" />
                     {sample.map((s, i) => (
                         <div className={`home__job home__job--${i + 1}`} key={s.title}>
                             <div className="home__job-tags">
@@ -56,7 +59,6 @@ export default function HomePages() {
                             </div>
                         </div>
                     ))}
-                    <span className="home__available"><i />פנויה עכשיו</span>
                 </div>
             </section>
 
