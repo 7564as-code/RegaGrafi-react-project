@@ -1,0 +1,19 @@
+
+
+{
+"rewrites": [
+    {
+      "source": "/auth/:path*",
+      "destination": "https://regagrafi.vercel.app/auth/:path*"
+
+    },   {
+      "source": "/api/:path*",
+      "destination": "https://regagrafi.vercel.app/api/:path*"
+
+    },
+    {
+        "source": "/(.*)",
+        "destination": "/index.html"
+    }
+  ]
+}
