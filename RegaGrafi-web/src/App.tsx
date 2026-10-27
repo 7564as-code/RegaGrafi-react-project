@@ -1,6 +1,5 @@
 import './App.css'
 import AppRouter from './routs'
-import Header from './components/features/Header'
 
 
 
