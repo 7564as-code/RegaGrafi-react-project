@@ -7,6 +7,7 @@ import LOGINpage from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUpPage";
 import PostJobPage from "./pages/PostJobPage";
 import ProtectedRoute from "./components/features/ProtectedRoute"
+import EditJobPage from "./pages/EditJobPage";
 export default function AppRouter() {
     
     return <>
@@ -18,6 +19,7 @@ export default function AppRouter() {
          <Route path="/login" element={<LOGINpage />} />
         <Route path="/signUp" element={<SignUpPage />} />
         <Route path="/post" element={<ProtectedRoute><PostJobPage/></ProtectedRoute>}></Route>
+        <Route path="/jobs/:id/edit" element={<ProtectedRoute><EditJobPage></EditJobPage></ProtectedRoute>}></Route>
 
 
         <Route path="*" element={<div>הדף לא נמצא</div>}></Route>

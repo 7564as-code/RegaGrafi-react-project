@@ -25,3 +25,9 @@ export function getJob(id: string | undefined) {
 export function postJob(data: jobFormType) {
     return api<SingleResponse<jobType>>(`/api/jobs`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
 }
+
+
+
+export function editJob(id:string,data: jobFormType) {
+    return api<SingleResponse<jobType>>(`/api/jobs/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
+}

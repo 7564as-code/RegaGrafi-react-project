@@ -3,6 +3,7 @@ import Button from "../ui/Button"
 import Tag from "../ui/Tag"
 import { Link } from "react-router-dom";
 import "./JobCard.css";
+import { useAuth } from "../../hook/useAuth";
 type jobcard = {
     jobcard: jobType
 }
@@ -40,7 +41,8 @@ function JobCard({ jobcard }: jobcard) {
         if (days === 1) return "אתמול";
         return `לפני ${days} ימים`;
     }
-
+const {user}=useAuth()
+const canedit=user?.id==jobcard.owner.id||user?.role === "admin"
     return (
         <div className="job-card">
             <div className="job-card__tags">
@@ -56,8 +58,12 @@ function JobCard({ jobcard }: jobcard) {
                 <div className="job-card__price">
                     {jobcard.budget && <span className="job-card__budget">₪{jobcard.budget}</span>}
                     <span className="job-card__meta">{timeAgo(jobcard.created_at)}</span>
-                </div>
-                <Link to={`/jobs/${jobcard.id}`}><Button text="שלחי הצעה" size="small" /></Link>
+               
+               </div>
+               <div>
+            {!canedit&&   <Link to={`/jobs/${jobcard.id}`}><Button text="שלחי הצעה" size="small" /></Link>}
+            </div>
+              {canedit && <Link to={`/jobs/${jobcard.id}/edit`}><Button text="עדכון" size="small" /></Link>}
             </div>
         </div>
     )

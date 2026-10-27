@@ -1,4 +1,4 @@
-import { getJobs, postJob } from "../api/jobs";
+import { editJob, getJobs, postJob } from "../api/jobs";
 import { getJob } from "../api/jobs";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -26,4 +26,15 @@ const navigate=useNavigate()
  
  return mutation
  }
+
+
+  export function useEditJob(id:string){
+ const queryClient =useQueryClient()
+const navigate=useNavigate()
+ const mutation=useMutation({mutationFn:(data:jobFormType)=>editJob(id,data),onSuccess:()=>{queryClient.invalidateQueries({queryKey: ["jobs"]})
+ navigate("/jobs")}})
+ 
+ return mutation
+ }
+
 
