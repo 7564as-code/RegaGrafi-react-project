@@ -2,7 +2,7 @@
 // POST /api/jobs -> create a job (the caller becomes the owner)
 import { ApiError, handleError, parseBody } from "@/lib/api/errors";
 import { JOB_SELECT, listJobs } from "@/lib/api/listJobs";
-import { requireUser } from "@/lib/auth/getCurrentUser";
+import { requireOnboardedUser, requireUser } from "@/lib/auth/getCurrentUser";
 import { createClient } from "@/lib/supabase/server";
 import { createJobSchema, listJobsQuerySchema, queryToObject } from "@/lib/validation/jobs";
 
@@ -20,7 +20,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const user = await requireUser();
+    const user = await requireOnboardedUser();
     const body = await parseBody(request, createJobSchema);
 
     const supabase = await createClient();

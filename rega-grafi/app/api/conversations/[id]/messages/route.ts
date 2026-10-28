@@ -5,7 +5,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { after } from "next/server";
 import { ApiError, handleError, parseBody } from "@/lib/api/errors";
 import { notifyNewMessage } from "@/lib/email/notifications";
-import { requireUser } from "@/lib/auth/getCurrentUser";
+import { requireOnboardedUser, requireUser } from "@/lib/auth/getCurrentUser";
 import { createClient } from "@/lib/supabase/server";
 import { messagesQuerySchema, sendMessageSchema } from "@/lib/validation/conversations";
 import { profileIdSchema } from "@/lib/validation/profile";
@@ -83,7 +83,7 @@ export async function GET(request: Request, ctx: RouteContext<"/api/conversation
 
 export async function POST(request: Request, ctx: RouteContext<"/api/conversations/[id]/messages">) {
   try {
-    const user = await requireUser();
+    const user = await requireOnboardedUser();
     const { body } = await parseBody(request, sendMessageSchema);
     const supabase = await createClient();
     const conversation = await loadConversation(supabase, ctx);

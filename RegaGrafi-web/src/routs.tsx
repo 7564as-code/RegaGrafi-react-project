@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/features/ProtectedRoute"
 import EditJobPage from "./pages/EditJobPage";
 import UnderConstructionPage from "./pages/UnderConstructionPage";
 import JobProposalsPage from "./pages/JobProposalsPage";
+import ProfilePage from "./pages/ProfilePage";
 export default function AppRouter() {
     
     return <>
@@ -23,6 +24,7 @@ export default function AppRouter() {
         <Route path="/post" element={<ProtectedRoute><PostJobPage/></ProtectedRoute>}></Route>
         <Route path="/jobs/:id/edit" element={<ProtectedRoute><EditJobPage></EditJobPage></ProtectedRoute>}></Route>
         <Route path="/jobs/:id/proposals" element={<ProtectedRoute><JobProposalsPage></JobProposalsPage></ProtectedRoute>}></Route>
+        <Route path="/profile" element={<ProtectedRoute><ProfilePage></ProfilePage></ProtectedRoute>}></Route>
 
 
         <Route path="/designers" element={<UnderConstructionPage />} />

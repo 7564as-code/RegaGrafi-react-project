@@ -6,7 +6,7 @@ import { after } from "next/server";
 import { ApiError, handleError, parseBody } from "@/lib/api/errors";
 import { notifyNewProposal } from "@/lib/email/notifications";
 import { PROPOSAL_SELECT, toProposalResponse } from "@/lib/api/proposals";
-import { requireUser } from "@/lib/auth/getCurrentUser";
+import { requireOnboardedUser, requireUser } from "@/lib/auth/getCurrentUser";
 import { createClient } from "@/lib/supabase/server";
 import { profileIdSchema } from "@/lib/validation/profile";
 import { createProposalSchema } from "@/lib/validation/proposals";
@@ -43,7 +43,7 @@ export async function GET(_request: Request, ctx: RouteContext<"/api/jobs/[id]/p
 
 export async function POST(request: Request, ctx: RouteContext<"/api/jobs/[id]/proposals">) {
   try {
-    const user = await requireUser();
+    const user = await requireOnboardedUser();
     const jobId = await readJobId(ctx);
     const body = await parseBody(request, createProposalSchema);
     const supabase = await createClient();

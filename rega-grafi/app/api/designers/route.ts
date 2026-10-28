@@ -19,7 +19,8 @@ export async function GET(request: Request) {
       .select("id, display_name, bio, categories, availability, logo_url, portfolio_url", {
         count: "exact",
       })
-      .eq("is_designer", true);
+      .eq("is_designer", true)
+      .eq("onboarded", true); // half-finished sign-ups are not listed
 
     if (query.availability) builder = builder.eq("availability", query.availability);
     if (query.category) builder = builder.contains("categories", [query.category]);

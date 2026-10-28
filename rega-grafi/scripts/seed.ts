@@ -65,6 +65,7 @@ async function main() {
       .update({
         display_name: u.name,
         role: u.role,
+        onboarded: true,
         is_designer: u.designer,
         availability: "available",
         categories: u.designer ? ["logo", "flyer", "social"] : [],

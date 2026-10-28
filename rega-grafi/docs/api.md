@@ -13,8 +13,10 @@ import { createClient } from "@/lib/supabase/browser";
 
 const supabase = createClient();
 
-// הרשמה (נשלח מייל אימות)
+// הרשמה, שלב 1: נשלח מייל עם קוד אימות (ראו "תהליך ההרשמה" למטה)
 await supabase.auth.signUp({ email, password });
+// הרשמה, שלב 2: המשתמש מקליד את הקוד באותו דף, והסשן נפתח
+await supabase.auth.verifyOtp({ email, token: code, type: "email" });
 
 // התחברות
 await supabase.auth.signInWithPassword({ email, password });
@@ -66,11 +68,20 @@ await api("/api/jobs", {
 | 400 | `INVALID_JSON` | גוף הבקשה אינו JSON תקין |
 | 401 | `UNAUTHORIZED` | לא מחוברת |
 | 403 | `FORBIDDEN` | מחוברת אבל אין הרשאה |
+| 403 | `PROFILE_INCOMPLETE` | **כבוי זמנית** - אף endpoint לא מחזיר את זה כרגע (ראו "תהליך ההרשמה" למטה) |
 | 404 | `NOT_FOUND` | לא קיים, או שאין לך הרשאה לראות אותו |
 | 409 | (שונה לפי המקרה) | התנגשות, למשל כבר הוגשה הצעה |
 | 500 | `INTERNAL_ERROR` | תקלה בשרת |
 
 **תפקידים:** `user` (רגיל) ו-`admin`. כל משתמש יכול גם לפרסם משרות וגם להציע שירותי עיצוב.
+
+**תהליך ההרשמה (בדף אחד, בלי קישור):**
+1. `signUp({ email, password })`. המשתמש מקבל מייל עם קוד, והדף עובר למצב "הכנס קוד".
+2. `verifyOtp({ email, token, type: "email" })`. אחרי זה המשתמש מחובר (הסשן ב-cookies).
+3. אותו דף מציג את טופס הפרטים. בסיום שומרים עם `PATCH /api/me` (ואפשר `POST /api/me/logo`), ואז קוראים ל-`POST /api/me/complete`.
+4. עד שקראת ל-`complete` בהצלחה, `onboarded` ב-`GET /api/me` הוא `false`. **זמנית** (עד שהחסימה תוחזר), פעולות יצירה (פרסום משרה, הצעה, פתיחת שיחה, שליחת הודעה) **לא** נדחות בגלל זה - רק בדיקת ההתחברות (`401`) נשארת. `POST /api/me/complete` עדיין קיים ועדיין מעדכן את `onboarded` ל-`true`.
+
+בכל כניסה לאתר כדאי לקרוא ל-`GET /api/me`, ואם `onboarded` הוא `false`, להחזיר את המשתמש לשלב 3. זה מכסה גם מי שסגר את הדף באמצע, וגם מי שנרשם עם גוגל. (ברגע שהחסימה תוחזר, גם פעולות היצירה ייתקעו עד סיום השלב הזה.)
 
 ---
 
@@ -83,8 +94,9 @@ await api("/api/jobs", {
   "id": "uuid", "email": "me@example.com", "display_name": "Noa", "bio": null,
   "categories": ["logo"], "is_designer": false, "availability": "available",
   "logo_url": null, "portfolio_url": null, "notify_email": true,
-  "role": "user", "created_at": "2026-10-17T18:36:55Z" } }
+  "role": "user", "onboarded": true, "created_at": "2026-10-17T18:36:55Z" } }
 ```
+`onboarded` הוא `false` עד שההרשמה הושלמה (ראו `POST /api/me/complete`).
 
 ### `PATCH /api/me`: עדכון הפרופיל שלי
 כל השדות אופציונליים. שדה לא מוכר (כמו `role`) נדחה ב-400.
@@ -100,6 +112,14 @@ await api("/api/jobs", {
 | `notify_email` | boolean | האם לקבל התראות במייל |
 
 שגיאות: `400 VALIDATION_ERROR`, `409 DISPLAY_NAME_TAKEN`.
+
+### `POST /api/me/complete`: סיום ההרשמה
+בלי גוף בקשה. קוראים לזה אחרי ששמרתם את הפרטים ב-`PATCH /api/me`. השרת קורא את הפרופיל השמור ובודק:
+- `display_name` שונה מהשם הזמני שנוצר אוטומטית (`user_xxxxxxxx`).
+- אם `is_designer` הוא `true`, יש לפחות קטגוריה אחת ב-`categories`.
+
+הצלחה (200): הפרופיל המלא, עם `onboarded: true`. אפשר לקרוא שוב בלי נזק.
+שגיאות: `400 ONBOARDING_INCOMPLETE` (ה-`message` מפרט מה חסר), `401`.
 
 ### `POST /api/me/logo`: העלאת לוגו
 שולחים `multipart/form-data` עם שדה בשם `file` (PNG, JPEG או WebP, עד 2MB).

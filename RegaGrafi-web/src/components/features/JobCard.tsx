@@ -1,7 +1,7 @@
 import type { jobType } from "../../types/jobsType"
 import Button from "../ui/Button"
 import Tag from "../ui/Tag"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import "./JobCard.css";
 import { useAuth } from "../../hook/useAuth";
@@ -15,7 +15,7 @@ type jobcard = {
 }
 
 function JobCard({ jobcard }: jobcard) {
-
+    const navigate = useNavigate()
     function deadline(deadline: string): string {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -124,6 +124,15 @@ function JobCard({ jobcard }: jobcard) {
                                     onClick={toggleClosed}
                                 >
                                     {isClosed ? "פתיחה מחדש" : "סגירת מודעה"}
+                                </button>
+                                <button
+                                    type="button"
+                                    className="job-card__menu-item"
+                                    role="menuitem"
+                                    disabled={setStatus.isPending}
+                                    onClick={() => navigate(`/jobs/${jobcard.id}/proposals`)}>
+                             
+                                    הצעות של מודעה זו
                                 </button>
                             </div>
                         )}

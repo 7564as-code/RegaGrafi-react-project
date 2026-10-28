@@ -15,3 +15,8 @@ notify_email:boolean,
 role:"admin"|"user",
 created_at:string
 }
+
+export type profileFormType={
+    display_name:string,
+    portfolio_url?:string|null
+}

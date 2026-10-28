@@ -8,7 +8,7 @@ import {
   type ConversationRow,
   type LastMessage,
 } from "@/lib/api/conversations";
-import { requireUser } from "@/lib/auth/getCurrentUser";
+import { requireOnboardedUser, requireUser } from "@/lib/auth/getCurrentUser";
 import { createClient } from "@/lib/supabase/server";
 import { createConversationSchema } from "@/lib/validation/conversations";
 
@@ -59,7 +59,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const user = await requireUser();
+    const user = await requireOnboardedUser();
     const { jobId, otherUserId } = await parseBody(request, createConversationSchema);
     const supabase = await createClient();
 

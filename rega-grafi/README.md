@@ -38,7 +38,7 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
 ## 4. הרצת המיגרציות (יצירת הטבלאות)
 
-מיגרציה היא קובץ SQL שיוצר או משנה טבלאות במסד. מריצים את ארבעת הקבצים **לפי הסדר**:
+מיגרציה היא קובץ SQL שיוצר או משנה טבלאות במסד. מריצים את חמשת הקבצים **לפי הסדר**:
 
 1. ב-Supabase נכנסים ל-**SQL Editor** ואז **New query**.
 2. מדביקים ומריצים (Run) כל קובץ מתיקיית [supabase/migrations](supabase/migrations):
@@ -46,6 +46,7 @@ NEXT_PUBLIC_SITE_URL=http://localhost:3000
    2. `002_rls.sql`: כללי ההרשאות (RLS) ופונקציית `is_admin()`.
    3. `003_storage.sql`: הבאקט `logos` להעלאת לוגואים.
    4. `004_more_categories.sql`: מוסיף את הקטגוריות `video` ו-`ad`.
+   5. `005_onboarding.sql`: מוסיף את `profiles.onboarded` (השלמת הרשמה). משתמשים קיימים מסומנים כמסיימים.
 3. אם מופיע חלון "Potential issue detected", בוחרים **Run and enable RLS**.
 
 כל קובץ אמור להסתיים ב-`Success`.
@@ -87,8 +88,9 @@ npm run dev
 
 1. **URL Configuration:** Site URL הוא `http://localhost:3000`, ו-Redirect URLs הוא `http://localhost:3000/**`. בפרודקשן מוסיפים את כתובת האתר האמיתית.
 2. **Emails ואז SMTP Settings:** מפעילים Custom SMTP: Host `smtp.resend.com`, Port `465`, Username `resend`, Password הוא מפתח ה-API של Resend, ושולח מהדומיין המאומת.
-3. **Emails ואז Templates:** בתבניות Confirm signup ו-Reset password מחליפים את הקישור:
-   - אימות הרשמה: `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/`
+3. **Emails ואז Templates:** בתבניות Confirm signup ו-Reset password:
+   - אימות הרשמה: בגוף המייל מציגים את הקוד עם `{{ .Token }}` (המשתמש מקליד אותו בדף ההרשמה). כגיבוי אפשר להוסיף גם קישור: `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email&next=/complete-profile`
+   - אורך הקוד נקבע ב-Authentication ואז Providers ואז Email (Email OTP Length).
    - איפוס סיסמה: `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=recovery&next=/reset-password`
    - הקישור חייב להיות בשורה אחת, בתוך ה-`href`.
 4. **Providers ואז Email:** מוודאים ש-Confirm email מופעל.

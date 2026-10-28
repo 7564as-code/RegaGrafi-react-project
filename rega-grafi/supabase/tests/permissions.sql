@@ -105,6 +105,16 @@ begin
   end;
   r := r || format('%s | noa can NOT make herself admin (result: %s)', case when c <= 0 then 'PASS' else 'FAIL' end, c);
 
+  -- noa marks herself as onboarded (skipping step 2): blocked, only the server may do it
+  c := 0;
+  begin
+    update public.profiles set onboarded = true where id = noa;
+    get diagnostics c = row_count;
+    raise exception 'undo';
+  exception when others then if sqlerrm <> 'undo' then c := -1; end if;
+  end;
+  r := r || format('%s | noa can NOT set onboarded herself (result: %s)', case when c <= 0 then 'PASS' else 'FAIL' end, c);
+
   -- noa edits her own bio: allowed
   c := 0;
   begin

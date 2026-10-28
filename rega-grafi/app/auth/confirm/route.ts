@@ -13,14 +13,17 @@ export async function GET(request: Request) {
   const tokenHash = searchParams.get("token_hash");
   const type = typeSchema.safeParse(searchParams.get("type"));
   const next = safeNextPath(searchParams.get("next"));
+  // Behind Vercel's rewrite, `origin` is the server's internal domain, not the
+  // public site domain, so prefer the public URL when it's configured.
+  const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? origin).replace(/\/+$/, "");
 
   if (tokenHash && type.success) {
     const supabase = await createClient();
     const { error } = await supabase.auth.verifyOtp({ type: type.data, token_hash: tokenHash });
     // Success: the user is now signed in (cookies are set). For "recovery" the
     // "next" page lets them choose a new password.
-    if (!error) return NextResponse.redirect(`${origin}${next}`);
+    if (!error) return NextResponse.redirect(`${siteUrl}${next}`);
   }
 
-  return NextResponse.redirect(`${origin}${AUTH_ERROR_PATH}`);
+  return NextResponse.redirect(`${siteUrl}${AUTH_ERROR_PATH}`);
 }
