@@ -1,0 +1,25 @@
+.proposals {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+.proposals__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.proposals__title {
+  font-family: 'Heebo', 'Rubik', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.proposals__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  align-items: stretch;
+}
