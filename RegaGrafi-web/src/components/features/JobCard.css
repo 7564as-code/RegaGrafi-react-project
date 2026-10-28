@@ -92,6 +92,9 @@
 }
 
 .job-card__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 10px 12px;
   border: 0;
   border-radius: 10px;
@@ -119,4 +122,10 @@
 
 .job-card__deadline {
   margin-inline-start: auto;
+}
+
+.job-card__menu-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }

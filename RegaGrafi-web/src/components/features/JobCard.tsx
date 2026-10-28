@@ -1,7 +1,7 @@
 import type { jobType } from "../../types/jobsType"
 import Button from "../ui/Button"
 import Tag from "../ui/Tag"
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import "./JobCard.css";
 import { useAuth } from "../../hook/useAuth";
@@ -15,7 +15,6 @@ type jobcard = {
 }
 
 function JobCard({ jobcard }: jobcard) {
-    const navigate = useNavigate()
     function deadline(deadline: string): string {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -115,7 +114,14 @@ function JobCard({ jobcard }: jobcard) {
                         </button>
                         {menuOpen && (
                             <div className="job-card__menu-list" role="menu">
-                                <Link to={`/jobs/${jobcard.id}/edit`} className="job-card__menu-item" role="menuitem">עדכון</Link>
+                                <Link to={`/jobs/${jobcard.id}/proposals`} className="job-card__menu-item" role="menuitem">
+                                    <svg className="job-card__menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+                                    הצעות של מודעה זו
+                                </Link>
+                                <Link to={`/jobs/${jobcard.id}/edit`} className="job-card__menu-item" role="menuitem">
+                                    <svg className="job-card__menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" /></svg>
+                                    עדכון
+                                </Link>
                                 <button
                                     type="button"
                                     className="job-card__menu-item"
@@ -123,16 +129,8 @@ function JobCard({ jobcard }: jobcard) {
                                     disabled={setStatus.isPending}
                                     onClick={toggleClosed}
                                 >
+                                    <svg className="job-card__menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
                                     {isClosed ? "פתיחה מחדש" : "סגירת מודעה"}
-                                </button>
-                                <button
-                                    type="button"
-                                    className="job-card__menu-item"
-                                    role="menuitem"
-                                    disabled={setStatus.isPending}
-                                    onClick={() => navigate(`/jobs/${jobcard.id}/proposals`)}>
-                             
-                                    הצעות של מודעה זו
                                 </button>
                             </div>
                         )}
