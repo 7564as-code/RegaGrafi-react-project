@@ -6,7 +6,6 @@ export type ErrorInfo = {
     text: string,
 }
 
-// ממיר כל שגיאה להודעה בעברית שמתאימה למשתמשת.
 export function getErrorInfo(error: unknown): ErrorInfo {
     const status = error instanceof ApiRequestError ? error.status : -1
 

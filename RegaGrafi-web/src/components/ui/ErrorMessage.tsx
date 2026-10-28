@@ -6,7 +6,6 @@ type ErrorMessageProps = {
     onRetry?: () => void
 }
 
-// מציג שגיאת שרת במסך מלא, עם הכפתור המתאים לסוג השגיאה.
 export default function ErrorMessage({ error, onRetry }: ErrorMessageProps) {
     const { status, title, text } = getErrorInfo(error)
 

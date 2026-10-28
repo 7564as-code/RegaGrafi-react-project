@@ -12,11 +12,9 @@ export type jobType = {
     owner: {
         id: string,
         display_name: string,
-        logo_url: string|null
+        logo_url: string | null
     }
 }
-
-// export type jobcardType= Omit<jobType,'id'>
 
 export type jobFormType = {
     title: string,
@@ -24,9 +22,9 @@ export type jobFormType = {
     category: category,
     budget?: number | null,
     deadline?: string | null,
-    status:"open"|"closed"|"in_progress"
+    status: "open" | "closed" | "in_progress"
 
 }
-export type category = "other" | "logo" | "banner" | "flyer" | "video" | "ad"|"social"
+export type category = "other" | "logo" | "banner" | "flyer" | "video" | "ad" | "social"
 
 

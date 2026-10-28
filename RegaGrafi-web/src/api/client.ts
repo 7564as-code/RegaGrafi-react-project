@@ -1,5 +1,3 @@
-// שגיאה מהשרת (או מהרשת) עם הסטטוס, כדי שהמסך ידע איך להציג אותה.
-// status 0 = אין תקשורת עם השרת בכלל.
 export class ApiRequestError extends Error {
     status: number
     code: string
@@ -11,7 +9,7 @@ export class ApiRequestError extends Error {
     }
 }
 
-export async function api<T>(url:string,init?:RequestInit):Promise<T> {
+export async function api<T>(url: string, init?: RequestInit): Promise<T> {
     let res: Response
     try {
         res = await fetch(url, init)
@@ -20,7 +18,7 @@ export async function api<T>(url:string,init?:RequestInit):Promise<T> {
     }
 
     const json = await res.json().catch(() => null)
-    if(!res.ok)
+    if (!res.ok)
         throw new ApiRequestError(res.status, json?.error?.code ?? "UNKNOWN", json?.error?.message ?? res.statusText)
 
     return json
