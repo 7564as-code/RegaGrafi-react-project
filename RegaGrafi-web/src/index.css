@@ -61,3 +61,12 @@ svg {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout__content {
+  flex: 1;
+}

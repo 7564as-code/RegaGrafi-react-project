@@ -13,7 +13,6 @@ type ConfirmDialogProps = {
     onCancel: () => void
 }
 
-// חלון אישור מעוצב במקום window.confirm.
 export default function ConfirmDialog({ title, text, confirmText, cancelText = "ביטול", isPending, onConfirm, onCancel }: ConfirmDialogProps) {
     useEffect(() => {
         const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onCancel() }
