@@ -138,3 +138,59 @@ cursor: pointer;
   border-radius: 14px;
   cursor: pointer;
 }
+
+/* pagination */
+.jobs__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 40px 0 48px;
+  direction: rtl;
+}
+
+.jobs__pagination-info {
+  margin: 0;
+  font-size: 15px;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+  unicode-bidi: plaintext;
+}
+
+.jobs__pagination .button {
+  white-space: nowrap;
+}
+
+.jobs__pagination .button:hover:not(:disabled) {
+  background-color: var(--color-primary-soft) !important;
+  filter: none;
+}
+
+.jobs__pagination .button:disabled {
+  background-color: var(--color-input) !important;
+  color: var(--color-ink-faint) !important;
+  border: none !important;
+  cursor: not-allowed;
+  filter: none;
+}
+
+.jobs__pagination .button:focus-visible {
+  outline: 3px solid var(--color-primary-border);
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .jobs__pagination {
+    gap: 8px;
+    margin: 32px 0 40px;
+  }
+
+  .jobs__pagination .button {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .jobs__pagination-info {
+    font-size: 13px;
+  }
+}

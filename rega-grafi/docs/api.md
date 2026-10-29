@@ -216,6 +216,16 @@ const { data } = await api<{ data: { logo_url: string } }>("/api/me/logo", { met
 ```
 הערך `accepted` או `rejected`. שגיאות: `403 FORBIDDEN`, `404`, `409 ALREADY_DECIDED` (כבר הוחלט).
 
+### `GET /api/me/proposals`: ההצעות ששלחתי
+רק ההצעות של המשתמשת המחוברת (`designer_id` שלה), ממוינות מהחדשה לישנה. במקום `designer`, כל הצעה כוללת `job` עם השדות הציבוריים של המשרה בלבד (לא פרטי בעלת המשרה):
+```json
+{ "data": [
+  { "id": "uuid", "job_id": "uuid", "designer_id": "uuid", "message": "אשמח לעזור",
+    "price": 700, "delivery_hours": 48, "status": "pending", "created_at": "...",
+    "job": { "id": "uuid", "title": "לוגו לבית קפה", "status": "open" } }
+] }
+```
+
 ---
 
 ## 5. שיחות והודעות

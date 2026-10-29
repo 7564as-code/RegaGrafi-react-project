@@ -1,13 +1,13 @@
 import { editJob, getJobs, postJob, patchJobStatus } from "../api/jobs";
 import { getJob } from "../api/jobs";
 
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient,keepPreviousData } from "@tanstack/react-query";
 import type { jobFormType, jobType } from "../types/jobsType";
 import { useNavigate } from "react-router-dom";
 import type { filterType } from "../types/filterType";
 
 export function useJobs(filter: filterType) {
-   return useQuery({ queryKey: ["jobs", filter], queryFn: () => getJobs(filter), retry: false })
+   return useQuery({ queryKey: ["jobs", filter], queryFn: () => getJobs(filter), retry: false,placeholderData:keepPreviousData })
 }
 export function useJob(id: string | undefined) {
    return useQuery({ queryKey: ["jobs", id], queryFn: () => getJob(id), enabled: id !== undefined })

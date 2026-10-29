@@ -19,11 +19,14 @@ export default function JobPage() {
     const [filter, setfilter] = useState<filterType>({})
     const { isPending, isError, error, data, refetch } = useJobs(filter)
     const { register, handleSubmit } = useForm<search>();
+const totalPages = data
+    ? Math.ceil(data.pagination.total / data.pagination.pageSize)
+    : 1;
 
-
+const currentPage = filter.page ?? 1;
 
     function onSubmit(data: search) {
-        setfilter(prev => ({ ...prev, q: data.text.trim() || undefined }))
+        setfilter(prev => ({ ...prev, q: data.text.trim() || undefined,page:1 }))
     }
 
     return <main className="jobs">
@@ -42,17 +45,17 @@ export default function JobPage() {
                 <Button text="חיפוש" size="small" />
             </form>
             <select
-                value={filter.order || undefined}
-                onChange={e => setfilter(prev => ({ ...prev, order: e.target.value as "desc" | "asc" }))}
+                value={filter.order || "desc"}
+                onChange={e => setfilter(prev => ({ ...prev, order: e.target.value as "desc" | "asc",page:1 }))}
             >
-                <option value="desc">הכי חדשות קודם</option>
-                <option value="asc">הכי ישנות קודם</option>
+                <option value="desc">מהחדשות</option>
+                <option value="asc">מהישנות</option>
             </select>
         </div>
         <div className='jobs__filters'>
-            <button type='button' onClick={() => setfilter(prev => ({ ...prev, category: undefined,q:undefined }))}>
+            <button type='button' onClick={() => setfilter(prev => ({ ...prev, category: undefined,q:undefined ,page:1}))}>
                 <Tag text="הכל" color={filter.category === undefined ? "var(--color-coral-soft)" : "white"} /></button>
-            {categories.map((x) => <button key={x.value} onClick={() => setfilter(prev => ({ ...prev, category: x.value }))} type='button'><Tag text={x.label}
+            {categories.map((x) => <button key={x.value} onClick={() => setfilter(prev => ({ ...prev, category: x.value ,page:1}))} type='button'><Tag text={x.label}
                 color={filter.category === x.value ? "var(--color-coral-soft)" : "white"}></Tag></button>)}
         </div>
         </div>
@@ -70,6 +73,7 @@ export default function JobPage() {
                 ? <StatusMessage variant="empty" title="לא נמצאו מודעות שמתאימות לחיפוש" />
                 : <StatusMessage variant="empty" title="אין מודעות פתוחות כרגע" />
         )}
+        {totalPages>1&&<div className="jobs__pagination"><Button text='הקודם' color="var(--color-surface)" textColor="var(--color-primary)" borderColor="var(--color-primary)" disabled={currentPage===1} onClick={()=>setfilter(prev => ({ ...prev, page:currentPage-1}))}></Button><p className="jobs__pagination-info">עמוד {currentPage} מתוך {totalPages}</p><Button text='הבא' color="var(--color-surface)" textColor="var(--color-primary)" borderColor="var(--color-primary)" disabled={currentPage===totalPages} onClick={()=>setfilter(prev => ({ ...prev, page:currentPage+1}))}></Button></div>}
     </main>
 
 }
